@@ -68,10 +68,10 @@ func init() {
 	// read config from yaml file
 	viper.SetConfigName("default") // name of config file (without extension)
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")                                                      // REQUIRED if the config file does not have the extension in the name
-	viper.AddConfigPath("$HOME/go/pkg/mod/github.com/go-benchmark/config@v0.0.2") // path to look for the config file in
-	err := viper.ReadInConfig()                                                   // Find and read the config file
-	if err != nil {                                                               // Handle errors reading the config file
+	viper.AddConfigPath(".")                                           // REQUIRED if the config file does not have the extension in the name
+	viper.AddConfigPath("$HOME/go/src/github.com/go-benchmark/config") // path to look for the config file in
+	err := viper.ReadInConfig()                                        // Find and read the config file
+	if err != nil {                                                    // Handle errors reading the config file
 		panic(fmt.Errorf("fatal error config file: %s ", err))
 	}
 }
