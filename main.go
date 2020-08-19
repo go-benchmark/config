@@ -40,10 +40,15 @@ type ServiceConfiguration struct {
 // ConfigureOptions main config initial
 func ConfigureOptions(vu int) (*Options, error) {
 	testcase := fmt.Sprintf("testing%d", vu)
+	virtualUser := viper.GetInt(fmt.Sprintf("%s.vu", testcase))
+	if virtualUser != vu {
+		virtualUser = vu
+	}
+	
 	opts := &Options{
 		Host:        viper.GetString("api.endpoint"),
 		MQTTPrefix:  viper.GetString("mqtt.prefix"),
-		VirtualUser: viper.GetInt(fmt.Sprintf("%s.vu", testcase)),
+		VirtualUser: virtualUser,
 		UC: UserConfiguration{
 			RunServiceDelay:    viper.GetFloat64(fmt.Sprintf("%s.user.runServiceDelay", testcase)),
 			GetDataInterval:    viper.GetFloat64(fmt.Sprintf("%s.user.getDataInterval", testcase)),
