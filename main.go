@@ -1,4 +1,4 @@
-package config
+package main
 
 import (
 	"fmt"
@@ -39,30 +39,24 @@ type ServiceConfiguration struct {
 
 // ConfigureOptions main config initial
 func ConfigureOptions(vu int) (*Options, error) {
-	testcase := fmt.Sprintf("testing%d", vu)
-	virtualUser := viper.GetInt(fmt.Sprintf("%s.vu", testcase))
-	if virtualUser != vu {
-		virtualUser = vu
-	}
-	
 	opts := &Options{
 		Host:        viper.GetString("api.endpoint"),
 		MQTTPrefix:  viper.GetString("mqtt.prefix"),
-		VirtualUser: virtualUser,
+		VirtualUser: vu,
 		UC: UserConfiguration{
-			RunServiceDelay:    viper.GetFloat64(fmt.Sprintf("%s.user.runServiceDelay", testcase)),
-			GetDataInterval:    viper.GetFloat64(fmt.Sprintf("%s.user.getDataInterval", testcase)),
-			RealtimeInterval:   viper.GetFloat64(fmt.Sprintf("%s.user.realtime.interval", testcase)),
-			RealtimePeriod:     viper.GetFloat64(fmt.Sprintf("%s.user.realtime.period", testcase)),
-			RealtimeHBInterval: viper.GetInt(fmt.Sprintf("%s.user.realtime.heartbeatInterval", testcase)),
-			StartServiceDelay:  viper.GetFloat64(fmt.Sprintf("%s.user.startServiceDelay", testcase)),
+			RunServiceDelay:    viper.GetFloat64("testing.user.runServiceDelay"),
+			GetDataInterval:    viper.GetFloat64("testing.user.getDataInterval"),
+			RealtimeInterval:   viper.GetFloat64("testing.user.realtime.interval"),
+			RealtimePeriod:     viper.GetFloat64("testing.user.realtime.period"),
+			RealtimeHBInterval: viper.GetInt("testing.user.realtime.heartbeatInterval"),
+			StartServiceDelay:  viper.GetFloat64("testing.user.startServiceDelay"),
 		},
 		DC: DeviceConfiguration{
-			RealtimeInterval: viper.GetFloat64(fmt.Sprintf("%s.device.realtimeInterval", testcase)),
-			HistoryInterval:  viper.GetFloat64(fmt.Sprintf("%s.device.historyInterval", testcase)),
+			RealtimeInterval: viper.GetFloat64("testing.device.realtimeInterval"),
+			HistoryInterval:  viper.GetFloat64("testing.device.historyInterval"),
 		},
 		SC: ServiceConfiguration{
-			RealtimeLength: viper.GetInt(fmt.Sprintf("%s.service.realtimeLength", testcase)),
+			RealtimeLength: viper.GetInt("testing.service.realtimeLength"),
 		},
 	}
 
@@ -79,4 +73,11 @@ func init() {
 	if err != nil {                                                    // Handle errors reading the config file
 		panic(fmt.Errorf("fatal error config file: %s ", err))
 	}
+}
+func main() {
+	x, e := ConfigureOptions(10)
+	if e != nil {
+		panic(e)
+	}
+	fmt.Println(x)
 }
