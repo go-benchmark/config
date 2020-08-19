@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"fmt"
@@ -73,11 +73,4 @@ func init() {
 	if err != nil {                                                    // Handle errors reading the config file
 		panic(fmt.Errorf("fatal error config file: %s ", err))
 	}
-}
-func main() {
-	x, e := ConfigureOptions(10)
-	if e != nil {
-		panic(e)
-	}
-	fmt.Println(x)
 }
