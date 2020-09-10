@@ -12,11 +12,11 @@ testing:
     startServiceDelay: 900.0
     getDataInterval: 600.0
     realtime:
-      interval: 600.0
-      period: 30.0
+      interval: 86400.0
+      period: 600.0
       heartbeatInterval: 6 
   device:
     realtimeInterval: 1.0
-    historyInterval: 10.0
+    historyInterval: 100.0
   service:
     realtimeLength: 6
